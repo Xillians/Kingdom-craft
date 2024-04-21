@@ -1,26 +1,32 @@
-name: Deploy to GitHub Pages
+name: Deploy SvelteKit Website to GitHub Pages
 
 on:
   push:
     branches:
-      - main  # Adjust this to your main branch name
+      - main 
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: npm install
+      - name: Setup Node 🛎️
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'  # Change to match the Node.js version in your project
 
-      - name: Build
-        run: npm run build
+      - name: Install dependencies 🧶
+        run: npm install  # Change to 'yarn install' if using Yarn
 
-      - name: Deploy to GitHub Pages
+      - name: Build 🔨
+        run: npm run build  # Change to your build script if different
+
+      - name: Deploy 🚀
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
+          publish_dir: ./build
+          cname: www.okupter.com  # Replace with your custom domain if applicable
