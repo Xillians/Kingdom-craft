@@ -37,6 +37,7 @@ jobs:
             exit 1
           fi
       - name: Install pnpm
+        id: install-package-manager
         run: npm install -g pnpm
 
       - name: Setup Node 🛎️
@@ -45,19 +46,17 @@ jobs:
           node-version: 18.x
 
       - name: Install dependencies 🧶
+        id: install
         run: pnpm install         
 
       - name: Build 🔨
+        id: build
         run: pnpm build
-
-  # Deployment job
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
+      
+      - name: Deploy
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          branch: gh-pages
+          folder: build
+          token: ${{ secrets.GITHUB_TOKEN }}
