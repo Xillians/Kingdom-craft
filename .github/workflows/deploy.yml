@@ -19,9 +19,6 @@ jobs:
       - name: Run Docker container to build project
         run: docker run --rm -d sveltekit-app
 
-      - name: Wait for Docker container to finish
-        run: docker wait $(docker ps -q --filter ancestor=sveltekit-app)
-
       - name: Deploy to GitHub Pages
         run: |
           git config --global user.email "github-actions@github.com"
