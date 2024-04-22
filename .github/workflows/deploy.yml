@@ -22,6 +22,18 @@ jobs:
       - name: Run Docker container to build project
         run: docker run --rm -d sveltekit-app
 
+      - name: Check if build directory exists on gh-pages branch
+        run: |
+          if [[ -d "build" ]]; then
+            echo "Build directory exists on gh-pages branch."
+          else
+            echo "Build directory does not exist on gh-pages branch."
+            exit 0  # Exit successfully if build directory is empty
+          fi
+
+      - name: Copy built files from Docker container
+        run: docker cp $(docker ps -lq):/app/build ./build
+
       - name: Deploy to GitHub Pages
         run: |
           git config --global user.email "github-actions@github.com"
