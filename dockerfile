@@ -15,10 +15,8 @@ FROM base as build
 
 COPY . .
 
-# Install dependencies
 RUN pnpm install
 
-# build the project
 RUN pnpm run build
 
 FROM base as production
@@ -30,14 +28,8 @@ USER service-user
 
 ENV NODE_ENV=production
 
-# Copy the built project from the previous stage
 COPY --from=build /app/build ./build
 
-# Copy the package.json and node_modules from the previous stage
-COPY --from=build /app/node_modules ./node_modules
-COPY --from=build /app/pnpm-lock.yaml ./pnpm-lock.yaml
-
-# Expose port 3000 (default SvelteKit port) to the outside world
 EXPOSE 3000
 
 CMD ["node", "build/index.js"]
