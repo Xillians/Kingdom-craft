@@ -10,7 +10,6 @@
     <slot></slot>
   </section>
   <footer>
-    <p>&copy; {new Date().getFullYear()} Kingdom Craft. All rights reserved.</p>
   </footer>
 </main>
 
