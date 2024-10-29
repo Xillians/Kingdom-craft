@@ -1,1 +1,3 @@
-<h1> Welcome to Kingdom-craft </h1>
+<b>
+  Content coming soon…
+</b>
